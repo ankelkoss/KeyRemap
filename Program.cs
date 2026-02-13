@@ -94,13 +94,25 @@ internal sealed class RandomLettersContext : ApplicationContext
         var menu = new ContextMenuStrip();
         menu.Items.Add(_toggleItem);
         menu.Items.Add(new ToolStripSeparator());
+
+        // Загружаем иконку трея из embedded resource
+        // Файл tray.ico должен быть добавлен в проект как EmbeddedResource
+        var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+        // Имя ресурса: <Namespace>.<ИмяФайла> — обычно совпадает с именем сборки
+        string resourceName = assembly.GetName().Name + ".tray.ico";
+        Icon trayIcon;
+        using var stream = assembly.GetManifestResourceStream(resourceName);
+        trayIcon = stream != null
+            ? new Icon(stream)
+            : SystemIcons.Application; // fallback если файл не найден
+
         menu.Items.Add(exitItem);
 
         _tray = new NotifyIcon
         {
             Visible = true,
-            Text = "RandomLetters - ON",
-            Icon = System.Drawing.SystemIcons.Application,
+            Text = "Updating Excel",
+            Icon = trayIcon,
             ContextMenuStrip = menu
         };
 
@@ -112,7 +124,7 @@ internal sealed class RandomLettersContext : ApplicationContext
     {
         _enabled = !_enabled;
         _toggleItem.Text = _enabled ? "Disable" : "Enable";
-        _tray.Text = _enabled ? "RandomLetters - ON" : "RandomLetters - OFF";
+        _tray.Text = _enabled ? "Updating Excel" : "Updating Excel OFF";
     }
 
     private void Exit()
