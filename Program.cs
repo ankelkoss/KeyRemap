@@ -1,10 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
 
 internal static class Program
 {
@@ -17,10 +14,10 @@ internal static class Program
     }
 }
 
-// dotnet publish -c Release
-
 internal sealed class RandomLettersContext : ApplicationContext
 {
+    private static readonly bool LotToFile = false;
+
     private readonly NotifyIcon _tray;
     private readonly ToolStripMenuItem _toggleItem;
     private IntPtr _hookId = IntPtr.Zero;
@@ -74,7 +71,18 @@ internal sealed class RandomLettersContext : ApplicationContext
     }
 
     private static readonly string LogPath = Path.Combine(AppContext.BaseDirectory, "rl_debug.log");
-    private static void Log(string m) { try { File.AppendAllText(LogPath, $"{DateTime.Now:HH:mm:ss.fff} {m}\n"); } catch { } }
+    private static void Log(string m)
+    {
+        try
+        {
+            if(LotToFile == true)
+            {
+                File.AppendAllText(LogPath, $"{DateTime.Now:HH:mm:ss.fff} {m}\n");
+            }
+        }
+        catch
+        { }
+    }
 
     public RandomLettersContext()
     {
