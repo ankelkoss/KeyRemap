@@ -6,14 +6,19 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
 
+		<!-- Иконка самого exe файла -->
+		<ApplicationIcon>app.ico</ApplicationIcon>
+
 		<!-- Упаковка в один exe -->
 		<PublishSingleFile>true</PublishSingleFile>
 		<SelfContained>true</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-
-		<!-- Убираем лишнее из exe -->
-		<TrimSelf>false</TrimSelf>
 		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
 	</PropertyGroup>
+
+	<!-- Иконка трея упакуется внутрь exe -->
+	<ItemGroup>
+		<EmbeddedResource Include="tray.ico" />
+	</ItemGroup>
 </Project>
