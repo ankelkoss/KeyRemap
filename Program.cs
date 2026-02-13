@@ -86,7 +86,11 @@ internal sealed class RandomLettersContext : ApplicationContext
 
     public RandomLettersContext()
     {
-        File.WriteAllText(LogPath, $"=== START {DateTime.Now} ===\n");
+        if (LotToFile == true)
+        {
+            File.WriteAllText(LogPath, $"=== START {DateTime.Now} ===\n");
+        }
+
         Log($"IntPtr.Size={IntPtr.Size}");
         _proc = HookCallback;
         _toggleItem = new ToolStripMenuItem("Disable", null, (_, __) => Toggle());
