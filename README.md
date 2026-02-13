@@ -1,4 +1,7 @@
 ﻿# KeyRemap
+net9.0-windows
+
+dotnet publish -c Release
 
 # Список подменяемых букв и сдвиг на +1 по алфавиту
 
